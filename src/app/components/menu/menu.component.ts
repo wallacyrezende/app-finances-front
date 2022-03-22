@@ -21,10 +21,12 @@ export class MenuComponent implements OnInit {
       {
         label: 'Início',
         icon: 'pi pi-fw pi-home',
+        routerLink: 'home',
       },
       {
         label: 'Lançamentos',
         icon: 'pi pi-fw pi-shopping-cart',
+        routerLink: 'releases',
       },
       {
         label: 'Usuários',
@@ -32,7 +34,8 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: 'Novo',
-            icon: 'pi pi-fw pi-plus'
+            icon: 'pi pi-fw pi-plus',
+            routerLink: 'create-users',
           },
           {
             label: 'Editar',

@@ -14,9 +14,12 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppMainComponent } from './app.main.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ReleasesComponent } from './components/releases/releases.component';
 import { ProductService } from './service/productservice';
+import { GraphicOverviewComponent } from './components/graphic-overview/graphic-overview.component';
+import { ReleasesPageComponent } from './pages/releases-page/releases-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 
 
 
@@ -26,8 +29,11 @@ import { ProductService } from './service/productservice';
     AppMainComponent,
     LoginComponent,
     MenuComponent,
-    HomeComponent,
-    ReleasesComponent
+    HomePageComponent,
+    ReleasesComponent,
+    GraphicOverviewComponent,
+    ReleasesPageComponent,
+    UsersPageComponent
   ],
   imports: [
     BrowserModule,

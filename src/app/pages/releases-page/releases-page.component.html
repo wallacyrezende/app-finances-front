@@ -1,0 +1,12 @@
+<div class="grid p-fluid">
+  <div class="card col-12">
+    <div class="col-12 md:col-6">
+      <label for="ano">Ano</label>
+			<input pInputText id="ano" type="number" style="margin: 0.5rem"/>
+    </div>
+    <div class="col-12 md:col-6">
+      <label for="mes">Mês</label>
+			<p-dropdown [options]="months" [(ngModel)]="selectedDrop" placeholder="Selecione" [showClear]="true" style="margin: 0.5rem"></p-dropdown>
+    </div>
+  </div>
+</div>
