@@ -1,6 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+/* Login Facebook */
+import { FormBuilder } from '@angular/forms';
+import {
+  FacebookLoginProvider,
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from 'angularx-social-login';
+
 /* Routing */
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,10 +47,26 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
     BrowserModule,
     AppRoutingModule,
     SakaiMaterialModule,
+    SocialLoginModule,
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
-     ConfigService, ProductService
+    ConfigService, ProductService, FormBuilder,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('392274785662753'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+    {
+      provide: LocationStrategy, 
+      useClass: HashLocationStrategy
+    },
     ],
   bootstrap: [AppComponent],
 })

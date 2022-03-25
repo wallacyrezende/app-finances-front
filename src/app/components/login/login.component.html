@@ -1,30 +1,53 @@
 <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
-  <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
-      <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
-          <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
-              <div class="text-center mb-5">
-                  <img src="assets/layout/images/avatar.jpg" alt="Image" height="50" class="mb-3">
-                  <div class="text-900 text-3xl font-medium mb-3">Bem-vindo de volta, Wallacy!</div>
-                  <span class="text-600 font-medium">Sign in to continue</span>
-              </div>
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+        <div class="col-12 xl:col-6"
+             style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="h-full w-full m-0 py-7 px-4"
+                 style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                <div class="text-center mb-5">
+                    <img src="assets/layout/images/avatar.jpg" alt="Image" height="50" class="mb-3">
+                    <div class="text-900 text-3xl font-medium mb-3">Bem-vindo de volta, Wallacy!</div>
+                    <span class="text-600 font-medium">Entre para continuar</span>
+                </div>
 
-              <div class="w-full md:w-10 mx-auto">
-                  <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                  <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3" style="padding:1rem;">
+                <div class="w-full md:w-10 mx-auto">
+                    <div *ngIf="isLoggedin">
+                        <label for="firstName" class="block text-900 font-medium text-xl mb-2">Nome</label>
+                        <input id="firstName" type="text" placeholder="Primeiro nome" [(ngModel)]="socialUser.firstName"
+                               pInputText class="w-full mb-3" style="padding:1rem;">
 
-                  <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                  <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+                        <label for="lastName" class="block text-900 font-medium text-xl mb-2">Sobrenome</label>
+                        <input id="lastName" type="text" placeholder="Último nome" [(ngModel)]="socialUser.lastName"
+                               pInputText class="w-full mb-3" style="padding:1rem;">
 
-                  <div class="flex align-items-center justify-content-between mb-5">
-                      <div class="flex align-items-center">
-                          <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-                          <label for="rememberme1">Remember me</label>
-                      </div>
-                      <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
-                  </div>
-                  <button pButton pRipple label="Sign In" routerLink="/home" class="w-full p-3 text-xl"></button>
-              </div>
-          </div>
-      </div>
-  </div>
+                        <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+                        <input id="email" type="text" placeholder="Email address" [(ngModel)]="socialUser.email"
+                               pInputText class="w-full mb-3" style="padding:1rem;">
+                        <button pButton pRipple label="Sair" routerLink="/login" class="w-full p-3 text-xl" (click)="signOut()"></button>
+                    </div>
+                    <div *ngIf="!isLoggedin">
+                        <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
+                        <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                               style="padding:1rem;">
+
+                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
+                        <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true"
+                                    styleClass="w-full mb-3"></p-password>
+
+                        <div class="flex align-items-center justify-content-between mb-5">
+                            <div class="flex align-items-center">
+                                <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
+                                <label for="rememberme1">Remember me</label>
+                            </div>
+                            <a class="font-medium no-underline ml-2 text-right cursor-pointer"
+                               style="color: var(--primary-color)">Forgot password?</a>
+                        </div>
+                        <button pButton pRipple label="Entrar" routerLink="/home" class="w-full p-3 text-xl"></button>
+                        <button pButton pRipple (click)="loginWithFacebook()" label="Logar com Facebook"
+                                class="w-full p-3 text-xl" style="margin-top:1rem;"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

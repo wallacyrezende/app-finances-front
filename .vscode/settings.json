@@ -1,0 +1,6 @@
+{
+    "editor.stickyTabStops": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 10000,
+    "workbench.productIconTheme": "fluent-icons"
+}

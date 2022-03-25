@@ -1,12 +1,30 @@
 <div class="grid p-fluid">
-  <div class="card col-12">
-    <div class="col-12 md:col-6">
-      <label for="ano">Ano</label>
-			<input pInputText id="ano" type="number" style="margin: 0.5rem"/>
+    <div class="card col-12">
+        <div class="col-12 md:col-6">
+            <label for="year">Ano</label>
+            <input pInputText id="year" type="number" />
+        </div>
+        <div class="col-12 md:col-6">
+            <label for="mouth">Mês</label>
+            <p-dropdown id="mouth" [options]="months" [(ngModel)]="mouthSelected" placeholder="Selecione"
+                        [showClear]="true"></p-dropdown>
+        </div>
+        <div class="col-12 md:col-6">
+            <label for="description">Descrição</label>
+            <input pInputText id="description" type="text" />
+        </div>
+        <div class="col-12 md:col-6">
+            <label for="releaseType">Tipo de lançamento</label>
+            <p-dropdown id="releaseType" [options]="releaseType" [(ngModel)]="releaseTypeSelected"
+                        placeholder="Selecione" [showClear]="true"></p-dropdown>
+        </div>
+        <div class="col-12 md:col-6 flex">
+            <button pButton pRipple label="Salvar" class="mr-2 mb-2"><i class="pi pi-save"></i></button>
+            <button pButton pRipple label="Cancelar" routerLink="/home" class="p-button-danger mr-2 mb-2"><i
+                   class="pi pi-times"></i></button>
+        </div>
     </div>
-    <div class="col-12 md:col-6">
-      <label for="mes">Mês</label>
-			<p-dropdown [options]="months" [(ngModel)]="selectedDrop" placeholder="Selecione" [showClear]="true" style="margin: 0.5rem"></p-dropdown>
+    <div class="col-12 md:col-12">
+        <app-releases></app-releases>
     </div>
-  </div>
 </div>
