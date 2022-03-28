@@ -13,6 +13,13 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+/*HttpClient */
+import { HttpClientModule } from '@angular/common/http';
+
+/*Services*/
+import { UserService } from '../app/shared/user/user.service';
+import { StorageService } from './shared/local-storage/storage.service';
+
 /* Sakai */
 import { SakaiMaterialModule } from './sakai-material.module';
 import { ConfigService } from './service/app.config.service';
@@ -45,12 +52,13 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     SakaiMaterialModule,
     SocialLoginModule,
   ],
   providers: [
-    ConfigService, ProductService, FormBuilder,
+    ConfigService, ProductService, FormBuilder, UserService, StorageService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

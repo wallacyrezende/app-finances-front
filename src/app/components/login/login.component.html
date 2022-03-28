@@ -27,7 +27,7 @@
                     </div>
                     <div *ngIf="!isLoggedin">
                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <input id="email1" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                        <input id="email1" [(ngModel)]="email" type="text" placeholder="Email address" pInputText class="w-full mb-3"
                                style="padding:1rem;">
 
                         <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
@@ -42,7 +42,7 @@
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer"
                                style="color: var(--primary-color)">Forgot password?</a>
                         </div>
-                        <button pButton pRipple label="Entrar" routerLink="/home" class="w-full p-3 text-xl"></button>
+                        <button pButton pRipple label="Entrar" (click)="login()" class="w-full p-3 text-xl"></button>
                         <button pButton pRipple (click)="loginWithFacebook()" label="Logar com Facebook"
                                 class="w-full p-3 text-xl" style="margin-top:1rem;"></button>
                     </div>
