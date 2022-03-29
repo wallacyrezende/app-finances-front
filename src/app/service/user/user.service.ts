@@ -4,23 +4,23 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { UserDTO } from './User';
 import { User } from './User';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
     providedIn: 'root',
 })
 export class UserService {
 
-    // Define API
-    //'http://localhost:8080'   'https://minhasfincancas-api.herokuapp.com'
-    apiURL = 'http://localhost:8080';
+    apiURL = environment.apiUrl;
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
     ) { }
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
         }),
     };
-    // HttpClient API post() method => Auth User
+
     authUser(userDTO: UserDTO): Observable<User> {
         return this.http
             .post<User>(
@@ -47,9 +47,9 @@ export class UserService {
             errorMessage = error.error.message;
         } else {
             // Get server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            errorMessage = error.error;
         }
-        window.alert(errorMessage);
+        console.log(errorMessage);
         return throwError(() => {
             return errorMessage;
         });

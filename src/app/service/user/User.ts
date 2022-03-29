@@ -1,10 +1,10 @@
-export class UserDTO {
+export interface UserDTO {
     email?: string;
     name?: string;
     password?: string;
 }
 
-export class User {
+export interface User {
     id?: number;
     name?: string;
     email?: string;

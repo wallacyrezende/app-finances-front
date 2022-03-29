@@ -1,22 +1,30 @@
 <div class="card">
-  <h5>Recent Sales</h5>
-  <p-table [value]="products" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+  <h5>Lançamentos Recentes</h5>
+  <p-table [value]="dataGraphic" [paginator]="true" [rows]="5" responsiveLayout="scroll">
       <ng-template pTemplate="header">
           <tr>
-              <th>Image</th>
-              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-              <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-              <th>View</th>
+              <th>Imagem</th>
+              <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon></th>
+              <th pSortableColumn="value">Valor <p-sortIcon field="value"></p-sortIcon></th>
+              <th pSortableColumn="value">Mês <p-sortIcon field="mouth"></p-sortIcon></th>
+              <th pSortableColumn="value">Ano <p-sortIcon field="year"></p-sortIcon></th>
+              <th pSortableColumn="value">Tipo <p-sortIcon field="type"></p-sortIcon></th>
+              <th pSortableColumn="value">Status <p-sortIcon field="status"></p-sortIcon></th>
+              <th>Ver</th>
           </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
+      <ng-template pTemplate="body" let-dataGraphic>
           <tr>
               <td style="width: 15%; min-width: 5rem;">
-                  <img src="assets/demo/images/product/{{product.image}}" class="shadow-4" alt="{{product.name}}" width="50">
+                  <img [src]="dataGraphic.type === 'DESPESA' ? 'assets/images/expenses.png' : 'assets/images/make-money.png'" class="shadow-4" width="50">
               </td>
-              <td style="width: 35%; min-width: 7rem;">{{product.name}}</td>
-              <td style="width: 35%; min-width: 8rem;">{{product.price | currency:'USD'}}</td>
-              <td style="width: 15%;">
+              <td style="width: 15%; min-width: 7rem;">{{dataGraphic.description}}</td>
+              <td style="width: 15%; min-width: 8rem;">{{dataGraphic.value | currency:'BRL'}}</td>
+              <td style="width: 15%; min-width: 8rem;">{{dataGraphic.mouth}}</td>
+              <td style="width: 15%; min-width: 8rem;">{{dataGraphic.year}}</td>
+              <td style="width: 15%; min-width: 8rem;">{{dataGraphic.type}}</td>
+              <td style="width: 15%; min-width: 8rem;">{{dataGraphic.status}}</td>
+              <td style="width: 10%;">
                   <button pButton pRipple type="button" icon="pi pi-search" class="p-button p-component p-button-text p-button-icon-only"></button>
               </td>
           </tr>

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/shared/local-storage/storage.service';
-import { UserService } from 'src/app/shared/user/user.service';
+import { UserService } from 'src/app/service/user/user.service';
+import { ReleasesService } from 'src/app/service/releases/releases.service';
+import { ReleasesDTO } from '../../service/releases/releases';
 
 @Component({
     templateUrl: './home-page.component.html'
@@ -10,6 +12,8 @@ export class HomePageComponent implements OnInit {
 
     userId!: number;
 
+    releases!: ReleasesDTO[];
+
     @Input() 
     public balance!: number;
 
@@ -17,6 +21,7 @@ export class HomePageComponent implements OnInit {
         private storageService: StorageService,
         private router: Router,
         private userService: UserService,
+        private releasesService: ReleasesService
     ) {
         const isLoggedin = this.storageService.getItem('isLoggedin');
         if(!isLoggedin) {
@@ -29,5 +34,6 @@ export class HomePageComponent implements OnInit {
 
      ngOnInit() {
         this.userService.getBalance(this.userId).subscribe( balance =>  this.balance = balance );
+        this.releasesService.getLastReleases(this.userId).subscribe( releases => this.releases = releases);
      }
 }

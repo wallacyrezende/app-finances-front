@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 /* Login Facebook */
@@ -17,8 +17,9 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
 /*Services*/
-import { UserService } from '../app/shared/user/user.service';
+import { UserService } from './service/user/user.service';
 import { StorageService } from './shared/local-storage/storage.service';
+import { ReleasesService } from './service/releases/releases.service';
 
 /* Sakai */
 import { SakaiMaterialModule } from './sakai-material.module';
@@ -31,12 +32,9 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ReleasesComponent } from './components/releases/releases.component';
-import { ProductService } from './service/productservice';
 import { GraphicOverviewComponent } from './components/graphic-overview/graphic-overview.component';
 import { ReleasesPageComponent } from './pages/releases-page/releases-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
-
-
 
 @NgModule({
   declarations: [
@@ -57,8 +55,11 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
     SakaiMaterialModule,
     SocialLoginModule,
   ],
+  // schemas: [
+  //   CUSTOM_ELEMENTS_SCHEMA
+  // ],
   providers: [
-    ConfigService, ProductService, FormBuilder, UserService, StorageService,
+    ConfigService, FormBuilder, UserService, StorageService, ReleasesService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

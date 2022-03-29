@@ -4,6 +4,7 @@
              style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
             <div class="h-full w-full m-0 py-7 px-4"
                  style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                 <p-toast key="tst" [baseZIndex]="99999"></p-toast>
                 <div class="text-center mb-5">
                     <img src="assets/layout/images/avatar.jpg" alt="Image" height="50" class="mb-3">
                     <div class="text-900 text-3xl font-medium mb-3">Bem-vindo de volta, Wallacy!</div>
@@ -27,24 +28,24 @@
                     </div>
                     <div *ngIf="!isLoggedin">
                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <input id="email1" [(ngModel)]="email" type="text" placeholder="Email address" pInputText class="w-full mb-3"
+                        <input id="email1" [(ngModel)]="email" type="text" placeholder="Endereço de email" pInputText class="w-full mb-3"
                                style="padding:1rem;">
 
-                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                        <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true"
+                        <label for="password1" class="block text-900 font-medium text-xl mb-2">Senha</label>
+                        <p-password id="password1" [(ngModel)]="password" placeholder="Senha" [toggleMask]="true"
                                     styleClass="w-full mb-3"></p-password>
 
                         <div class="flex align-items-center justify-content-between mb-5">
                             <div class="flex align-items-center">
                                 <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-                                <label for="rememberme1">Remember me</label>
+                                <label for="rememberme1">Lembre-me</label>
                             </div>
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer"
-                               style="color: var(--primary-color)">Forgot password?</a>
+                               style="color: var(--primary-color)">Esqueceu sua senha?</a>
                         </div>
                         <button pButton pRipple label="Entrar" (click)="login()" class="w-full p-3 text-xl"></button>
                         <button pButton pRipple (click)="loginWithFacebook()" label="Logar com Facebook"
-                                class="w-full p-3 text-xl" style="margin-top:1rem;"></button>
+                                class="w-full p-3 text-xl" style="margin-top:1rem;"><span class="pi pi-facebook"></span></button>
                     </div>
                 </div>
             </div>

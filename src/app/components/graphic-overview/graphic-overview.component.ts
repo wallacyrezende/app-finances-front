@@ -30,10 +30,10 @@ export class GraphicOverviewComponent implements OnInit {
         });
 
     this.chartData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
       datasets: [
         {
-          label: 'First Dataset',
+          label: 'Dados principais',
           data: [65, 59, 80, 81, 56, 55, 40],
           fill: false,
           backgroundColor: '#2f4860',
@@ -41,7 +41,7 @@ export class GraphicOverviewComponent implements OnInit {
           tension: .4
         },
         {
-          label: 'Second Dataset',
+          label: 'Dados Secundários',
           data: [28, 48, 40, 19, 86, 27, 90],
           fill: false,
           backgroundColor: '#00bb7e',
