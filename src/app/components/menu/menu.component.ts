@@ -37,11 +37,12 @@ export class MenuComponent implements OnInit {
                     {
                         label: 'Novo',
                         icon: 'pi pi-fw pi-plus',
-                        routerLink: 'releases',
+                        routerLink: 'create-releases',
                     },
                     {
                         label: 'Consultar',
-                        icon: 'pi pi-fw pi-search'
+                        icon: 'pi pi-fw pi-search',
+                        routerLink: 'releases',
                     }
                 ]
             },

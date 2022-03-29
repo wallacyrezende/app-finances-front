@@ -35,6 +35,7 @@ import { ReleasesComponent } from './components/releases/releases.component';
 import { GraphicOverviewComponent } from './components/graphic-overview/graphic-overview.component';
 import { ReleasesPageComponent } from './pages/releases-page/releases-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
+import { CreateReleasesPageComponent } from './pages/create-releases-page/create-releases-page.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
     ReleasesComponent,
     GraphicOverviewComponent,
     ReleasesPageComponent,
-    UsersPageComponent
+    UsersPageComponent,
+    CreateReleasesPageComponent
   ],
   imports: [
     BrowserModule,

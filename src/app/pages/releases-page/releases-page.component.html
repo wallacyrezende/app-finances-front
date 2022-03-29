@@ -1,27 +1,28 @@
 <div class="grid p-fluid">
     <div class="card col-12">
-        <div class="col-12 md:col-6">
-            <label for="year">Ano</label>
-            <input pInputText id="year" type="number" />
+        <h2>Consultar Lançamentos</h2>
+        <div class="col-12 md:col-6 field">
+            <label htmlFor="year">Ano</label>
+            <input pInputText id="year" type="number" min="1900" />
         </div>
-        <div class="col-12 md:col-6">
-            <label for="mouth">Mês</label>
+        <div class="col-12 md:col-6 field">
+            <label htmlFor="mouth">Mês</label>
             <p-dropdown id="mouth" [options]="months" [(ngModel)]="mouthSelected" placeholder="Selecione"
                         [showClear]="true"></p-dropdown>
         </div>
-        <div class="col-12 md:col-6">
-            <label for="description">Descrição</label>
-            <input pInputText id="description" type="text" />
+        <div class="col-12 md:col-6 field">
+            <label htmlFor="description">Descrição</label>
+            <input pInputText id="description" type="text" placeholder="Ex: Lanche, Salário ..."/>
         </div>
-        <div class="col-12 md:col-6">
-            <label for="releaseType">Tipo de lançamento</label>
+        <div class="col-12 md:col-6 field">
+            <label htmlFor="releaseType">Tipo de lançamento</label>
             <p-dropdown id="releaseType" [options]="releaseType" [(ngModel)]="releaseTypeSelected"
                         placeholder="Selecione" [showClear]="true"></p-dropdown>
         </div>
         <div class="col-12 md:col-6 flex">
-            <button pButton pRipple label="Salvar" class="mr-2 mb-2"><i class="pi pi-save"></i></button>
-            <button pButton pRipple label="Cancelar" routerLink="/home" class="p-button-danger mr-2 mb-2"><i
-                   class="pi pi-times"></i></button>
+            <button pButton pRipple label="Buscar" class="mr-2 mb-2"><i class="pi pi-search"></i></button>
+            <button pButton pRipple label="Cadastrar" class="p-button-warning mr-2 mb-2" routerLink="/home"><i
+                   class="pi pi-plus"></i></button>
         </div>
     </div>
     <div class="col-12 md:col-12">

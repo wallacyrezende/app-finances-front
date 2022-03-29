@@ -3,20 +3,21 @@
   <p-table [value]="dataGraphic" [paginator]="true" [rows]="5" responsiveLayout="scroll">
       <ng-template pTemplate="header">
           <tr>
-              <th>Imagem</th>
-              <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon></th>
-              <th pSortableColumn="value">Valor <p-sortIcon field="value"></p-sortIcon></th>
-              <th pSortableColumn="value">Mês <p-sortIcon field="mouth"></p-sortIcon></th>
-              <th pSortableColumn="value">Ano <p-sortIcon field="year"></p-sortIcon></th>
-              <th pSortableColumn="value">Tipo <p-sortIcon field="type"></p-sortIcon></th>
-              <th pSortableColumn="value">Status <p-sortIcon field="status"></p-sortIcon></th>
+              <th colspan="2"pSortableColumn="description" class="text-center">Descrição<p-sortIcon field="description"></p-sortIcon></th>
+              <th pSortableColumn="value">Valor<p-sortIcon field="value"></p-sortIcon></th>
+              <th pSortableColumn="mouth">Mês<p-sortIcon field="mouth"></p-sortIcon></th>
+              <th pSortableColumn="year">Ano<p-sortIcon field="year"></p-sortIcon></th>
+              <th pSortableColumn="type">Tipo<p-sortIcon field="type"></p-sortIcon></th>
+              <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
               <th>Ver</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-dataGraphic>
           <tr>
-              <td style="width: 15%; min-width: 5rem;">
-                  <img [src]="dataGraphic.type === 'DESPESA' ? 'assets/images/expenses.png' : 'assets/images/make-money.png'" class="shadow-4" width="50">
+              <td style="width: 15%; min-width: 4rem;">
+                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{ width: '3.5rem', height: '2.5rem' }">
+                        <i [ngClass]="['pi text-xl', dataGraphic.type === 'DESPESA' ? 'text-blue-500 pi-shopping-cart' : 'text-yellow-500 pi-dollar']"></i>
+                    </div>
               </td>
               <td style="width: 15%; min-width: 7rem;">{{dataGraphic.description}}</td>
               <td style="width: 15%; min-width: 8rem;">{{dataGraphic.value | currency:'BRL'}}</td>
