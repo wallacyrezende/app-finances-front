@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 /* Login Facebook */
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import {
   FacebookLoginProvider,
   SocialLoginModule,
@@ -56,6 +56,7 @@ import { CreateReleasesPageComponent } from './pages/create-releases-page/create
     AppRoutingModule,
     SakaiMaterialModule,
     SocialLoginModule,
+    ReactiveFormsModule
   ],
   // schemas: [
   //   CUSTOM_ELEMENTS_SCHEMA

@@ -27,7 +27,16 @@ export class ReleasesService {
         .pipe(retry(1), catchError(this.handleError));
     }
 
-    // Error handling
+    createRelease(release: ReleasesDTO): Observable<any> {
+        return this.http
+            .post<any>(
+                this.apiURL + '/api/releases/create-release', 
+                release,
+                this.httpOptions
+            )
+            .pipe(retry(1), catchError(this.handleError));
+    }
+
     handleError(error: any) {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {
