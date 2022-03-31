@@ -26,6 +26,135 @@
         </div>
     </div>
     <div class="col-12 md:col-12">
-        <app-releases></app-releases>
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2 flex">
+                        <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Excluir" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedReleases()" [disabled]="!selectedReleases || !selectedReleases.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Importar" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="releases" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
+                    [globalFilterFields]="['description']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" 
+                    [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} registros" 
+                    [(selection)]="selectedReleases" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Editar lançamentos</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Procurar..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="mouth">Mês <p-sortIcon field="mouth"></p-sortIcon></th>
+                        <th>Transação</th>
+                        <th pSortableColumn="year">Ano <p-sortIcon field="year"></p-sortIcon></th>
+                        <th pSortableColumn="value">Valor <p-sortIcon field="value"></p-sortIcon></th>
+                        <th pSortableColumn="type">Tipo <p-sortIcon field="type"></p-sortIcon></th>
+                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-release>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="release"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Descrição</span>
+                            {{release.description}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Mês</span>
+                            {{release.mouth}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Transação</span>
+                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{ width: '3.5rem', height: '2.5rem' }">
+                                <i [ngClass]="['pi text-xl', release.type === 'DESPESA' ? 'text-blue-500 pi-shopping-cart' : 'text-yellow-500 pi-dollar']"></i>
+                            </div>
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Ano</span>
+                            {{release.year}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Valor</span>
+                            {{release.value | currency:'BRL'}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;">
+                            <span class="p-column-title">Tipo</span>
+                            {{release.type}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+                            <span [class]="'product-badge status-' + (release.status ? release.status.toLowerCase() : '')">{{release.status}}</span>
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editRelease(release)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteRelease(release)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="releaseDialog" [style]="{width: '450px'}" header="Detalhes" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{ width: '3.5rem', height: '2.5rem' }">
+                    <i [ngClass]="['pi text-xl', release.type === 'DESPESA' ? 'text-blue-500 pi-shopping-cart' : 'text-yellow-500 pi-dollar']"></i>
+                </div>
+                <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"> -->
+                <div class="field">
+                    <label for="name">Descrição</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="release.description" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !release.description}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !release.description">Descrição obrigatória.</small>
+                </div>
+                
+
+                
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveRelease()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteReleaseDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="release">Você tem certeza que quer excluir o lançamento <b>{{release.description}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteReleaseDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteReleasesDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Você tem certeza que quer excluir os lançamentos selecionados?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteReleasesDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
     </div>
 </div>
