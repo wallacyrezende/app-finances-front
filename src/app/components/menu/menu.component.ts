@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 import { StorageService } from '../../shared/local-storage/storage.service';
 
 
@@ -18,8 +19,7 @@ export class MenuComponent implements OnInit {
     tieredItems!: MenuItem[];
 
     constructor(
-        private router: Router,
-        private storageService: StorageService
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
@@ -65,7 +65,7 @@ export class MenuComponent implements OnInit {
             {
                 label: 'Sair',
                 icon: 'pi pi-fw pi-sign-out',
-                command: () => { this.logout() },
+                command: () => { this.authService.logout() },
             }
         ];
 
@@ -87,11 +87,6 @@ export class MenuComponent implements OnInit {
                 label: 'Home', icon: 'pi pi-fw pi-home'
             },
         ];
-    }
-
-    logout() {
-        this.storageService.removeItem('isLoggedin');
-        this.router.navigate(['login']);
     }
 
 }

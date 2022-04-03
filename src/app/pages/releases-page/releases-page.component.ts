@@ -39,8 +39,7 @@ export class ReleasesPageComponent implements OnInit {
         private releasesService: ReleasesService,
         private storageService: StorageService
     ) {
-        const user = this.storageService.getItem('userLogged');
-        this.userId = user?.id;
+        this.userId = this.storageService.getItem('user')?.id;
      }
 
     ngOnInit() {

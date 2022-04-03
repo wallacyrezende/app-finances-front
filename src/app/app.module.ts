@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 /* Login Facebook */
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user/user.service';
 import { StorageService } from './shared/local-storage/storage.service';
 import { ReleasesService } from './service/releases/releases.service';
+import { AuthService } from './shared/auth/auth.service';
+import { AuthGuard } from './shared/auth/auth.guard';
+import { SecureInnerPagesGuard } from './shared/auth/secure-inner-pages.guard';
 
 /* Sakai */
 import { SakaiMaterialModule } from './sakai-material.module';
@@ -64,6 +67,7 @@ import { CreateReleasesPageComponent } from './pages/create-releases-page/create
   // ],
   providers: [
     ConfigService, FormBuilder, UserService, StorageService, ReleasesService,
+    AuthService, AuthGuard, SecureInnerPagesGuard,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

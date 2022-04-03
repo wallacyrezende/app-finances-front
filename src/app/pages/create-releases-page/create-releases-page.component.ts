@@ -19,7 +19,7 @@ export class CreateReleasesPageComponent implements OnInit {
         private formBuilder: FormBuilder,
         private releasesService: ReleasesService,
         private storageService: StorageService,
-    ) { this.userId = this.storageService.getItem('userLogged')?.id as number }
+    ) { this.userId = this.storageService.getItem('user')?.id as number }
 
     ngOnInit() {
         this.createForm();

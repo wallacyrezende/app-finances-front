@@ -2,33 +2,49 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { UserDTO, User } from './User';
+import { UserDTO, User } from '../../service/user/User';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+
 
 @Injectable({
     providedIn: 'root',
 })
-export class UserService {
-
+export class AuthService {
     apiURL = environment.apiUrl;
+
     constructor(
         private http: HttpClient,
+        private router: Router
     ) { }
+
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
         }),
     };
 
-    getBalance(userId: number): Observable<number> {
+    authLogin(userData: UserDTO): Observable<User> {
         return this.http
-        .get<number>(
-            this.apiURL + '/api/usuarios/' + userId + '/saldo'
-        )
-        .pipe(retry(1), catchError(this.handleError));
+            .post<User>(
+                this.apiURL + '/api/usuarios/autenticar',
+                JSON.stringify(userData),
+                this.httpOptions
+            )
+            .pipe(catchError(this.handleError));
     }
 
-    // Error handling
+    get isLoggedIn(): boolean {
+        const user = JSON.parse(localStorage.getItem('user')!);
+        const isLoggedIn = localStorage.getItem('isLoggedin')!;
+        return (user !== null) && (isLoggedIn != null) ;
+    }
+
+    logout() {
+        localStorage.removeItem('isLoggedin');
+        this.router.navigate(['login']);
+    }
+
     handleError(error: any) {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {
