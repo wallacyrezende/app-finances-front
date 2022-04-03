@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment.prod';
 
 /* Login Facebook */
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -70,9 +71,12 @@ import { CreateReleasesPageComponent } from './pages/create-releases-page/create
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('392274785662753'),
+            provider: new FacebookLoginProvider(environment.facebookId),
           },
         ],
+        onError: (err) => {
+          console.log(err)
+        }
       } as SocialAuthServiceConfig,
     },
     {
