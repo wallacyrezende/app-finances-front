@@ -8,11 +8,11 @@
         <div class="flex flex-wrap flex-row-reverse justify-content-between
                     sm:col-12 md:col-7 lg:col-5">
             <div class="card sm:col-3 md:col-4 lg:col-2 card-money">
-                <div class="money">
+                <div class="money gain">
                     <i class="color-icon pi pi-dollar"></i>
                 </div>
                 <p>Ganhos</p>
-                <h4>{{ balance | currency:'BRL'}}</h4>
+                <h4>{{ extractGains | currency:'BRL'}}</h4>
                 <div class="card-footer">
                     <div class="stats">
                         <i class="pi pi-calendar"></i>
@@ -22,11 +22,11 @@
             </div>
     
             <div class="card sm:col-3 md:col-4 lg:col-2 card-money">
-                <div class="money">
+                <div class="money lose">
                     <i class="color-icon pi pi-dollar"></i>
                 </div>
                 <p>Perdas</p>
-                <h4>{{ balance | currency:'BRL'}}</h4>
+                <h4>{{ extractLoses | currency:'BRL'}}</h4>
                 <div class="card-footer">
                     <div class="stats">
                         <i class="pi pi-calendar"></i>
@@ -36,7 +36,7 @@
             </div>
     
             <div class="card sm:col-3 md:col-4 lg:col-2 card-money">
-                <div class="money">
+                <div class="money balance">
                     <i class="color-icon pi pi-dollar"></i>
                 </div>
                 <p>Saldo</p>

@@ -10,7 +10,7 @@ import { ReleasesDTO } from 'src/app/service/releases/releases';
 @Component({
     templateUrl: './releases-page.component.html',
     providers: [MessageService, ConfirmationService],
-    styleUrls: ['../../../assets/demo/badges.scss']
+    styleUrls: ['../../../assets/demo/badges.scss', './releases-page.component.scss']
 })
 export class ReleasesPageComponent implements OnInit {
 

@@ -15,8 +15,9 @@
       <ng-template pTemplate="body" let-dataGraphic>
           <tr>
               <td style="width: 15%; min-width: 4rem;">
-                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{ width: '3.5rem', height: '2.5rem' }">
-                        <i [ngClass]="['pi text-xl', dataGraphic.type === 'DESPESA' ? 'text-blue-500 pi-shopping-cart' : 'text-yellow-500 pi-dollar']"></i>
+                    <div class="flex align-items-center justify-content-center border-round" [ngClass]="dataGraphic.type === 'DESPESA' ? 'buy' : 'gain'"
+                        [ngStyle]="{ width: '3.5rem', height: '2.5rem' }">
+                        <i [ngClass]="['pi text-xl text-white', dataGraphic.type === 'DESPESA' ? 'pi-shopping-cart' : 'pi-dollar']"></i>
                     </div>
               </td>
               <td style="width: 15%; min-width: 7rem;">{{dataGraphic.description}}</td>

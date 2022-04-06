@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-import { StorageService } from '../../shared/local-storage/storage.service';
-
 
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
+    styleUrls: ['./menu.component.scss']
 })
 
 export class MenuComponent implements OnInit {

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { UserDTO, User } from './User';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -24,6 +23,16 @@ export class UserService {
         return this.http
         .get<number>(
             this.apiURL + '/api/usuarios/' + userId + '/saldo'
+        )
+        .pipe(retry(1), catchError(this.handleError));
+    }
+
+    getExtractByReleaseType(userId: number, releaseType: string): Observable<number> {
+        let params = new HttpParams().set('releaseType', releaseType);
+        return this.http
+        .get<number>(
+            this.apiURL + '/api/usuarios/' + userId + '/extract',
+            { params:params }
         )
         .pipe(retry(1), catchError(this.handleError));
     }

@@ -5,7 +5,8 @@ import { AppConfig } from 'src/app/api/appconfig';
 
 @Component({
   selector: 'app-releases',
-  templateUrl: './releases.component.html'
+  templateUrl: './releases.component.html',
+  styleUrls: ['./releases.component.scss']
 })
 export class ReleasesComponent implements OnInit {
 
