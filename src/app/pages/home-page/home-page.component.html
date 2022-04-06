@@ -1,11 +1,57 @@
-<div class="grid">
-    <div class="card col-12">
-        <div style="float:right; display: flex; align-items:top;">
-            <h3>Saldo atual {{ balance | currency:'BRL'}}</h3>
+<div class="card col-12">
+    <div class="grid">
+        <div class="sm:col-12 md:col-5 lg:col-7">
+            <h1> Seja Bem vindo!</h1>
+            <p>Este sistema ainda está em desenvolvimento, pelo melhor dev do mundo!</p>
         </div>
-        <h1> Seja Bem vindo!</h1>
-        <p>Este sistema ainda está em desenvolvimento, pelo melhor dev do mundo!</p>
-        <app-releases [dataGraphic]="releases"></app-releases>
-        <app-graphic-overview></app-graphic-overview>
+
+        <div class="flex flex-wrap flex-row-reverse justify-content-between
+                    sm:col-12 md:col-7 lg:col-5">
+            <div class="card sm:col-3 md:col-4 lg:col-2 card-money">
+                <div class="money">
+                    <i class="color-icon pi pi-dollar"></i>
+                </div>
+                <p>Ganhos</p>
+                <h4>{{ balance | currency:'BRL'}}</h4>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="pi pi-calendar"></i>
+                        Últimos 30 dias
+                    </div>
+                </div>
+            </div>
+    
+            <div class="card sm:col-3 md:col-4 lg:col-2 card-money">
+                <div class="money">
+                    <i class="color-icon pi pi-dollar"></i>
+                </div>
+                <p>Perdas</p>
+                <h4>{{ balance | currency:'BRL'}}</h4>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="pi pi-calendar"></i>
+                        Últimos 30 dias
+                    </div>
+                </div>
+            </div>
+    
+            <div class="card sm:col-3 md:col-4 lg:col-2 card-money">
+                <div class="money">
+                    <i class="color-icon pi pi-dollar"></i>
+                </div>
+                <p>Saldo</p>
+                <h4>{{ balance | currency:'BRL'}}</h4>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="pi pi-calendar"></i>
+                        Últimos 30 dias
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-releases class="col-12" [dataGraphic]="releases"></app-releases>
+        <app-graphic-overview  class="col-12"></app-graphic-overview>
+        
     </div>
 </div>

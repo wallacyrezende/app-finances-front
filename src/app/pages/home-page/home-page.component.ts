@@ -5,7 +5,8 @@ import { ReleasesService } from 'src/app/service/releases/releases.service';
 import { ReleasesDTO } from '../../service/releases/releases';
 
 @Component({
-    templateUrl: './home-page.component.html'
+    templateUrl: './home-page.component.html',
+    styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
 
