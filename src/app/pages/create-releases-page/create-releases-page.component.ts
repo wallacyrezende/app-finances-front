@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReleasesType } from '../../shared/enum/releaseType';
+import { releasesType } from '../../shared/enum/releaseType';
 import { Months } from '../../shared/enum/months';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReleasesService } from 'src/app/service/releases/releases.service';
@@ -11,7 +11,7 @@ import { StorageService } from 'src/app/shared/local-storage/storage.service';
 export class CreateReleasesPageComponent implements OnInit {
 
     mouths = Months;
-    releasesType = ReleasesType;
+    releasesType = releasesType;
     releaseForm: any;
     userId!: number;
 

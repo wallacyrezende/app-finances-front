@@ -1,4 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 
@@ -28,7 +30,7 @@ import { SecureInnerPagesGuard } from './shared/auth/secure-inner-pages.guard';
 /* Sakai */
 import { SakaiMaterialModule } from './sakai-material.module';
 import { ConfigService } from './service/app.config.service';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 /* Components */
 import { AppMainComponent } from './app.main.component';
@@ -56,6 +58,7 @@ import { CreateReleasesPageComponent } from './pages/create-releases-page/create
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     SakaiMaterialModule,
@@ -85,7 +88,7 @@ import { CreateReleasesPageComponent } from './pages/create-releases-page/create
     },
     {
       provide: LocationStrategy, 
-      useClass: HashLocationStrategy
+      useClass: PathLocationStrategy
     },
     ],
   bootstrap: [AppComponent],

@@ -4,7 +4,7 @@
         <form (ngSubmit)="onSubmit()" [formGroup]="releaseForm">
             <div class="col-12 md:col-6 field">
                 <label htmlFor="year">Ano</label>
-                <input pInputText id="year" type="number" min="1900" placeholder="Ex: 2020" formControlName="year" />
+                <input pInputText id="year" type="number" min="1900" placeholder="Ex: 2022" formControlName="year" />
             </div>
             <div class="col-12 md:col-6 field">
                 <label htmlFor="mouth">Mês</label>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-12 md:col-6 field">
                 <label htmlFor="value">Valor</label>
-                <input pInputText id="value" type="number" placeholder="Informe o valor do seu lançamento" formControlName="value" min="0"/>
+                <p-inputNumber id="value" formControlName="value" mode="currency" currency="BRL" locale="pt-BR" ></p-inputNumber>
             </div>
             <div class="col-12 md:col-6 field">
                 <label htmlFor="releaseType">Tipo de lançamento</label>

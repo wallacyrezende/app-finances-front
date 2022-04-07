@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
-import { ReleasesType } from 'src/app/shared/enum/releaseType';
+import { ReleaseStatus, releasesType } from 'src/app/shared/enum/releaseType';
 import { Months } from '../../shared/enum/months';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ReleasesService } from 'src/app/service/releases/releases.service';
@@ -16,7 +16,7 @@ export class ReleasesPageComponent implements OnInit {
 
     months: SelectItem[] = Months;
 
-    releaseType: SelectItem[] = ReleasesType;
+    releaseType: SelectItem[] = releasesType;
 
     mouthSelected: any
 
@@ -32,12 +32,14 @@ export class ReleasesPageComponent implements OnInit {
     releaseDialog!: boolean;
     deleteReleasesDialog!: boolean;
     deleteReleaseDialog!: boolean;
+    effectiveDialog!: boolean;
 
     constructor( 
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private releasesService: ReleasesService,
-        private storageService: StorageService
+        private storageService: StorageService,
+        private serviceMsgError: MessageService,
     ) {
         this.userId = this.storageService.getItem('user')?.id;
      }
@@ -88,6 +90,11 @@ export class ReleasesPageComponent implements OnInit {
         this.release = {...release};
     }
 
+    effectiveRelease(release: ReleasesDTO) {
+        this.release = {...release};
+        this.effectiveDialog = true;
+    }
+
     confirmDeleteSelected(){
         this.deleteReleasesDialog = false;
         this.releases = this.releases.filter(val => !this.selectedReleases.includes(val));
@@ -116,6 +123,18 @@ export class ReleasesPageComponent implements OnInit {
 
     saveRelease() {
         this.submitted = true;
+    }
+
+    confirmEffectiveRelease() {
+        this.releasesService.updateStatus(this.release.id, ReleaseStatus.effective).subscribe({
+            next: (data) => {
+                this.effectiveDialog = !(data != null);
+                this.releasesService.getLastReleases(this.userId).subscribe( data => this.releases = data);
+            }, 
+            error: (e) => {
+                this.serviceMsgError.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+            }
+        })
     }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -9,7 +9,8 @@ import { ReleasesDTO } from './releases';
 })
 export class ReleasesService {
 
-    apiURL = environment.apiUrl;
+    prefixAPI = '/api/releases/';
+    apiURL = environment.apiUrl.concat(this.prefixAPI);
     constructor(
         private http: HttpClient
     ) { }
@@ -22,7 +23,7 @@ export class ReleasesService {
     getLastReleases(userId: number): Observable<ReleasesDTO[]> {
         return this.http
         .get<ReleasesDTO[]>(
-            this.apiURL + '/api/releases/last-releases/' + userId
+            this.apiURL + 'last-releases/' + userId
         )
         .pipe(retry(1), catchError(this.handleError));
     }
@@ -30,9 +31,19 @@ export class ReleasesService {
     createRelease(release: ReleasesDTO): Observable<any> {
         return this.http
             .post<any>(
-                this.apiURL + '/api/releases/create-release', 
+                this.apiURL + 'create-release', 
                 release,
                 this.httpOptions
+            )
+            .pipe(retry(1), catchError(this.handleError));
+    }
+
+    updateStatus(releaseId: number, status: string): Observable<any> {
+        let params = new HttpParams().set('status', status);
+        return this.http
+            .put<any>(
+                this.apiURL + releaseId +'/update-status', 
+                params
             )
             .pipe(retry(1), catchError(this.handleError));
     }

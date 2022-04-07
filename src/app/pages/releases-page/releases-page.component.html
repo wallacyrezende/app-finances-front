@@ -105,6 +105,7 @@
                         </td>
                         <td>
                             <div class="flex">
+                                <button pButton pRipple pTooltip="Efetivar"  icon="pi pi-check" class="p-button-rounded p-button-info mr-2" (click)="effectiveRelease(release)"></button>
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editRelease(release)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteRelease(release)"></button>
                             </div>
@@ -155,6 +156,17 @@
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteReleasesDialog = false"></button>
                 <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="effectiveDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="release">Você tem certeza que deseja <b>efetivar</b> o lançamento <b>{{release.description.trim()}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="effectiveDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmEffectiveRelease()"></button>
             </ng-template>
         </p-dialog>
     </div>

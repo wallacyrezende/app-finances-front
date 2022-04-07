@@ -3,7 +3,7 @@ import { StorageService } from 'src/app/shared/local-storage/storage.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { ReleasesService } from 'src/app/service/releases/releases.service';
 import { ReleasesDTO } from '../../service/releases/releases';
-import { releasesType } from 'src/app/shared/enum/releaseType';
+import { ReleasesType } from 'src/app/shared/enum/releaseType';
 
 @Component({
     templateUrl: './home-page.component.html',
@@ -34,7 +34,7 @@ export class HomePageComponent implements OnInit {
         this.userId = this.storageService.getItem('user')?.id;
         this.userService.getBalance(this.userId).subscribe( data =>  this.balance = data );
         this.releasesService.getLastReleases(this.userId).subscribe( data => this.releases = data);
-        this.userService.getExtractByReleaseType(this.userId, releasesType.gain).subscribe( data =>  this.extractGains = data );
-        this.userService.getExtractByReleaseType(this.userId, releasesType.lose).subscribe( data =>  this.extractLoses = data );
+        this.userService.getExtractByReleaseType(this.userId, ReleasesType.gain).subscribe( data =>  this.extractGains = data );
+        this.userService.getExtractByReleaseType(this.userId, ReleasesType.lose).subscribe( data =>  this.extractLoses = data );
      }
 }
