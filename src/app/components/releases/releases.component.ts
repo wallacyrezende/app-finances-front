@@ -15,7 +15,7 @@ export class ReleasesComponent implements OnInit {
   subscription!: Subscription;
 
   @Input()
-  dataGraphic: any;
+  dataTable: any;
 
   constructor(
     private configService: ConfigService

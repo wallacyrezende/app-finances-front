@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { ReleaseStatus, releasesType } from 'src/app/shared/enum/releaseType';
 import { Months } from '../../shared/enum/months';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -21,6 +21,11 @@ export class ReleasesPageComponent implements OnInit {
     mouthSelected: any
 
     releaseTypeSelected: any
+
+    first = 0;
+    rows = 10;
+    totalRecords!: number;
+    selectAll: boolean = false;
 
     userId!: number;
     releases!: ReleasesDTO[];
@@ -45,8 +50,6 @@ export class ReleasesPageComponent implements OnInit {
      }
 
     ngOnInit() {
-        this.releasesService.getLastReleases(this.userId).subscribe( data => this.releases = data);
-    
         this.cols = [
             {field: 'description', header: 'Descrição'},
             {field: 'mouth', header: 'Mês'},
@@ -55,12 +58,21 @@ export class ReleasesPageComponent implements OnInit {
             {field: 'type', header: 'Tipo'},
             {field: 'status', header: 'Status'}
         ];
+    }
 
-        this.status = [
-            {label: 'INSTOCK', value: 'instock'},
-            {label: 'LOWSTOCK', value: 'lowstock'},
-            {label: 'OUTOFSTOCK', value: 'outofstock'}
-        ];
+    teste(event: any) { console.log(event);}
+
+    loadReleases(event: LazyLoadEvent) {
+        this.first = event.first!;
+        this.rows = event.rows!;
+        let pageNumber = this.first/event.rows!;
+
+            this.releasesService.getReleases(this.userId, pageNumber, this.rows).subscribe({
+                next: (data) => {
+                    this.releases = data.items;
+                    this.totalRecords = data.totalRecords || 0;
+                }
+            });
     }
 
     openNew() {

@@ -32,7 +32,7 @@ export class UserService {
         return this.http
         .get<number>(
             this.apiURL + '/api/usuarios/' + userId + '/extract',
-            { params:params }
+            { params: params }
         )
         .pipe(retry(1), catchError(this.handleError));
     }

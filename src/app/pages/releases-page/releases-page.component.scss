@@ -7,3 +7,28 @@
     background: linear-gradient(60deg,#6354ec,#3835e5);
     box-shadow: 0 4px 20px 0 rgb(0 0 0 / 14%), 0 7px 10px -5px rgb(244 67 54 / 40%);
 }
+
+
+.releases-badge {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-pending {
+        background: #C8E6C9;
+        color: #256029;
+    }
+
+    &.status-effective {
+        background: #ECCFFF;
+        color: #694382;
+    }
+
+    &.status-canceled {
+        background: #e7c5c4;
+        color: #9c7c5c;
+    }
+}

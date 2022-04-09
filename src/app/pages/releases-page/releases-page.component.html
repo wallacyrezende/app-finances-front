@@ -41,11 +41,9 @@
                     <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
-
-            <p-table #dt [value]="releases" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
-                    [globalFilterFields]="['description']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" 
-                    [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} registros" 
-                    [(selection)]="selectedReleases" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt 
+                    [lazy]="true" (onLazyLoad)="loadReleases($event)" [totalRecords]="totalRecords" [value]="releases" [columns]="cols" [globalFilterFields]="['description']" [rows]="rows" [paginator]="true" [rowsPerPageOptions]="[5,10,30,50]" [showCurrentPageReport]="true" [(selection)]="selectedReleases" [rowHover]="true" selectionMode="multiple" responsiveLayout="scroll" dataKey="id"
+                    currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} registros">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">Editar lançamentos</h5>
@@ -101,7 +99,7 @@
                             {{release.type}}
                         </td>
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
-                            <span [class]="'product-badge status-' + (release.status ? release.status.toLowerCase() : '')">{{release.status}}</span>
+                            <span [ngClass]="['releases-badge', release.status === 'EFETIVADO' ? 'status-effective' : 'status-pending']">{{release.status}}</span>
                         </td>
                         <td>
                             <div class="flex">
@@ -120,7 +118,6 @@
                 <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{ width: '3.5rem', height: '2.5rem' }">
                     <i [ngClass]="['pi text-xl', release.type === 'DESPESA' ? 'text-blue-500 pi-shopping-cart' : 'text-yellow-500 pi-dollar']"></i>
                 </div>
-                <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"> -->
                 <div class="field">
                     <label for="name">Descrição</label>
                     <input type="text" pInputText id="name" [(ngModel)]="release.description" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !release.description}"/>

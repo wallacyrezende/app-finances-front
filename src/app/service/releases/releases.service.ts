@@ -11,6 +11,7 @@ export class ReleasesService {
 
     prefixAPI = '/api/releases/';
     apiURL = environment.apiUrl.concat(this.prefixAPI);
+
     constructor(
         private http: HttpClient
     ) { }
@@ -24,6 +25,16 @@ export class ReleasesService {
         return this.http
         .get<ReleasesDTO[]>(
             this.apiURL + 'last-releases/' + userId
+        )
+        .pipe(retry(1), catchError(this.handleError));
+    }
+
+    getReleases(userId: number, page: number, size: number): Observable<any> {
+        let params = new HttpParams().set('page', page).set('size', size);
+        return this.http
+        .get<any>(
+            this.apiURL + userId + '/releases-paginated',
+            { params: params }
         )
         .pipe(retry(1), catchError(this.handleError));
     }
