@@ -4,14 +4,15 @@ import { Months } from '../../shared/enum/months';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReleasesService } from 'src/app/service/releases/releases.service';
 import { StorageService } from 'src/app/shared/local-storage/storage.service';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     templateUrl: './create-releases-page.component.html'
 })
 export class CreateReleasesPageComponent implements OnInit {
 
-    mouths = Months;
-    releasesType = releasesType;
+    mouths: SelectItem[] = Months;
+    releasesType: SelectItem[] = releasesType;
     releaseForm: any;
     userId!: number;
 

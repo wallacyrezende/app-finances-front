@@ -15,11 +15,8 @@ import { ReleasesDTO } from 'src/app/service/releases/releases';
 export class ReleasesPageComponent implements OnInit {
 
     months: SelectItem[] = Months;
-
     releaseType: SelectItem[] = releasesType;
-
     mouthSelected: any
-
     releaseTypeSelected: any
 
     first = 0;
@@ -34,17 +31,17 @@ export class ReleasesPageComponent implements OnInit {
     cols!: any[];
     status!: any[];
     submitted!: boolean;
-    releaseDialog!: boolean;
-    deleteReleasesDialog!: boolean;
-    deleteReleaseDialog!: boolean;
-    effectiveDialog!: boolean;
+    showEditDialog!: boolean;
+    showAlert!: boolean;
+    action!: string;
+    pageNumberActual!: number;
 
     constructor( 
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private releasesService: ReleasesService,
         private storageService: StorageService,
-        private serviceMsgError: MessageService,
+        private serviceMsg: MessageService,
     ) {
         this.userId = this.storageService.getItem('user')?.id;
      }
@@ -60,93 +57,88 @@ export class ReleasesPageComponent implements OnInit {
         ];
     }
 
-    teste(event: any) { console.log(event);}
-
     loadReleases(event: LazyLoadEvent) {
         this.first = event.first!;
         this.rows = event.rows!;
-        let pageNumber = this.first/event.rows!;
-
-            this.releasesService.getReleases(this.userId, pageNumber, this.rows).subscribe({
-                next: (data) => {
-                    this.releases = data.items;
-                    this.totalRecords = data.totalRecords || 0;
-                }
-            });
+        this.pageNumberActual = this.first/event.rows!;
+        this.getReleases();            
     }
 
-    openNew() {
-        this.release = {id: 0,
-            description: '',
-            mouth: 0,
-            year: 0,
-            value: 0,
-            userId: 0,
-            type: '',
-            status: ''};
-        this.submitted = false;
-        this.releaseDialog = true;
-    }
-
-    deleteSelectedReleases() {
-        this.deleteReleasesDialog = true;
+    getReleases() {
+        this.releasesService.getReleases(this.userId, this.pageNumberActual, this.rows).subscribe({
+            next: (data) => {
+                this.releases = data.items;
+                this.totalRecords = data.totalRecords;
+            },
+            error: (e) => {
+                this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+            }
+        });
     }
 
     editRelease(release: ReleasesDTO) {
         this.release = {...release};
-        this.releaseDialog = true;
+        this.showEditDialog = true;
     }
 
-    deleteRelease(release: ReleasesDTO) {
-        this.deleteReleaseDialog = true;
-        this.release = {...release};
-    }
-
-    effectiveRelease(release: ReleasesDTO) {
-        this.release = {...release};
-        this.effectiveDialog = true;
-    }
-
-    confirmDeleteSelected(){
-        this.deleteReleasesDialog = false;
-        this.releases = this.releases.filter(val => !this.selectedReleases.includes(val));
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
-        this.selectedReleases = [];
-    }
-
-    confirmDelete(){
-        this.deleteReleaseDialog = false;
-        this.releases = this.releases.filter(val => val.id !== this.release.id);
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Release Deleted', life: 3000});
-        this.release = {id: 0,
-            description: '',
-            mouth: 0,
-            year: 0,
-            value: 0,
-            userId: 0,
-            type: '',
-            status: ''};
+    showDialog(action: string, release?: ReleasesDTO ) {
+        this.release = {...release!};
+        this.action = action;
+        this.showAlert = true;
     }
 
     hideDialog() {
-        this.releaseDialog = false;
+        this.showEditDialog = false;
         this.submitted = false;
     }
 
-    saveRelease() {
+    saveRelease(release: ReleasesDTO) {
         this.submitted = true;
+        if(release.description && release.mouth && release.year && release.value && release.type) {
+            this.releasesService.update(release).subscribe({
+                next: (data) => { 
+                    this.showEditDialog = !data;
+                    this.submitted = false;
+                    this.getReleases();
+                    this.serviceMsg.add({ key: 'tst', severity: 'success', summary: 'Sucesso', detail: "Lançamento atualizado" });
+                },
+                error: (e) => {
+                    this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+                }
+            });
+        }
+    }
+
+    confirmDeleteSelected(){
+        this.showAlert = false;
+        this.releases = this.releases.filter(val => !this.selectedReleases.includes(val));
+        this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Lançamentos deletados', life: 3000});
+        this.selectedReleases = [];
     }
 
     confirmEffectiveRelease() {
         this.releasesService.updateStatus(this.release.id, ReleaseStatus.effective).subscribe({
             next: (data) => {
-                this.effectiveDialog = !(data != null);
-                this.releasesService.getLastReleases(this.userId).subscribe( data => this.releases = data);
+                this.showAlert = !data;
+                this.getReleases(); 
+                this.serviceMsg.add({ key: 'tst', severity: 'success', summary: 'Sucesso', detail: "Lançamento efetivado" });
             }, 
             error: (e) => {
-                this.serviceMsgError.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+                this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
             }
         })
     }
 
+    confirmCancelRelease() { 
+        this.releasesService.updateStatus(this.release.id, ReleaseStatus.canceled).subscribe({
+            next: (data) => {
+                this.showAlert = !data;
+                this.getReleases(); 
+                this.serviceMsg.add({ key: 'tst', severity: 'success', summary: 'Sucesso', detail: "Lançamento cancelado" });
+            }, 
+            error: (e) => {
+                this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+            }
+        })
+    }
 }
