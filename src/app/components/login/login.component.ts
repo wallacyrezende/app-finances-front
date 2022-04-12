@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
     socialUser!: SocialUser;
     userDTO!: UserDTO;
+    isLoading: boolean = false;
 
     
     @Input()
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
         private socialAuthService: SocialAuthService,
         private router: Router,
         private storageService: StorageService,
-        private serviceMsgError: MessageService,
+        private serviceMsg: MessageService,
         public authService: AuthService
     ) { }
 
@@ -70,6 +71,7 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
+        this.isLoading = true;
         this.userDTO = {
             email: this.formDTO.email,
             password: this.formDTO.password
@@ -82,7 +84,11 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/home']);
             }, 
             error: (e) => {
-                this.serviceMsgError.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+                this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+                this.isLoading = false;
+            },
+            complete: () => {
+                this.isLoading = false;
             }
         });
     }

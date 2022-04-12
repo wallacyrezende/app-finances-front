@@ -1,10 +1,11 @@
 <div class="grid p-fluid">
+    <p-toast key="tst"></p-toast>
     <div class="card col-12">
         <h2>Cadastrar Lançamentos</h2>
-        <form (ngSubmit)="onSubmit()" [formGroup]="releaseForm">
+        <form (ngSubmit)="onSubmit()" (keydown.enter)="onSubmit()" [formGroup]="releaseForm">
             <div class="col-12 md:col-6 field">
-                <label htmlFor="year">Ano</label>
-                <input pInputText id="year" type="number" min="1900" placeholder="Ex: 2022" formControlName="year" />
+                <label for="year">Ano</label>
+                <p-inputNumber id="year" formControlName="year" placeholder="Ex: 2022" [min]="1920" autofocus></p-inputNumber>
             </div>
             <div class="col-12 md:col-6 field">
                 <label htmlFor="mouth">Mês</label>
@@ -16,18 +17,17 @@
                 <input pInputText id="description" type="text" formControlName="description" placeholder="Ex: Lanche, Salário ..."/>
             </div>
             <div class="col-12 md:col-6 field">
-                <label htmlFor="value">Valor</label>
-                <p-inputNumber id="value" formControlName="value" mode="currency" currency="BRL" locale="pt-BR" ></p-inputNumber>
-            </div>
-            <div class="col-12 md:col-6 field">
                 <label htmlFor="releaseType">Tipo de lançamento</label>
                 <p-dropdown id="releaseType" [options]="releasesType" formControlName="type"
                             placeholder="Selecione" [showClear]="true"></p-dropdown>
             </div>
+            <div class="col-12 md:col-6 field">
+                <label htmlFor="value">Valor</label>
+                <p-inputNumber id="value" formControlName="value" mode="currency" currency="BRL" locale="pt-BR" ></p-inputNumber>
+            </div>
             <div class="col-12 md:col-6 flex">
-                <button pButton pRipple label="Salvar" class="mr-2 mb-2"><i class="pi pi-save" type="submit"></i></button>
-                <button pButton pRipple label="Cancelar" class="p-button-danger mr-2 mb-2" routerLink="/home"><i
-                       class="pi pi-times"></i></button>
+                <button pButton pRipple label="Salvar" icon="pi pi-save" class="mr-2 " [loading]="isLoading" type="submit"></button>
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-danger" routerLink="/home"></button>
             </div>
         </form>
     </div>

@@ -3,8 +3,8 @@
         <div class="col-12 xl:col-6"
              style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
             <div class="h-full w-full m-0 py-7 px-4"
-                 style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
-                 <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+                style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                <p-toast key="tst"></p-toast>
                 <div class="text-center mb-5">
                     <img src="assets/layout/images/expenses.png" alt="Image" height="50" class="mb-3">
                     <div class="text-900 text-3xl font-medium mb-3">
@@ -30,7 +30,7 @@
                         <button pButton pRipple label="Sair" routerLink="/login" class="w-full p-3 text-xl" (click)="signOut()"></button>
                     </div>
 
-                    <div *ngIf="!isLoggedin">
+                    <div *ngIf="!isLoggedin" (keydown.enter)="login()">
                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
                         <input id="email1" [(ngModel)]="formDTO.email" type="text" placeholder="Endereço de email" pInputText class="w-full mb-3"
                                style="padding:1rem;">
@@ -48,7 +48,7 @@
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer"
                                style="color: var(--primary-color)">Esqueceu sua senha?</a>
                         </div>
-                        <button pButton pRipple label="Entrar" (click)="login()" class="w-full p-3 text-xl"></button>
+                        <button pButton pRipple label="Entrar" [loading]="isLoading" (click)="login()" class="w-full p-3 text-xl"></button>
                         <button pButton pRipple (click)="loginWithFacebook()" label="Logar com Facebook"
                                 class="w-full p-3 text-xl" style="margin-top:1rem;"><span class="pi pi-facebook"></span></button>
                     </div>
