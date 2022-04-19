@@ -18,7 +18,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                    <p-fileUpload mode="basic" accept=".csv" [maxFileSize]="100000" label="Import"
                                   chooseLabel="Importar" class="mr-2 inline-block"></p-fileUpload>
                     <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help"
                             (click)="dt.exportCSV()"></button>
@@ -69,14 +69,14 @@
                         <td>
                             <p-tableCheckbox [value]="release"></p-tableCheckbox>
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Descrição</span>
+                        <td style="width:20%; min-width:8rem;"><span class="p-column-title">Descrição</span>
                             {{release.description}}
                         </td>
-                        <td style="width:14%; min-width:10rem;">
+                        <td style="width:10%; min-width:5rem;">
                             <span class="p-column-title">Mês</span>
                             {{release.mouth}}
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Transação</span>
+                        <td style="width:10%; min-width:5rem;"><span class="p-column-title">Transação</span>
                             <div class="flex align-items-center justify-content-center border-round"
                                  [ngClass]="release.type === 'DESPESA' ? 'buy' : 'gain'"
                                  [ngStyle]="{ width: '3.5rem', height: '2.5rem' }">
@@ -84,23 +84,23 @@
                                    [ngClass]="['pi text-xl text-white', release.type === 'DESPESA' ? 'pi-shopping-cart' : 'pi-dollar']"></i>
                             </div>
                         </td>
-                        <td style="width:14%; min-width:8rem;">
+                        <td style="width:10%; min-width:8rem;">
                             <span class="p-column-title">Ano</span>
                             {{release.year}}
                         </td>
-                        <td style="width:14%; min-width:10rem;">
+                        <td style="width:10%; min-width:5rem;">
                             <span class="p-column-title">Valor</span>
                             {{release.value | currency:'BRL'}}
                         </td>
-                        <td style="width:14%; min-width: 10rem;">
+                        <td style="width:10%; min-width: 5rem;">
                             <span class="p-column-title">Tipo</span>
                             {{release.type}}
                         </td>
-                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+                        <td style="width:10%; min-width: 5rem; max-width:8rem;"><span class="p-column-title">Status</span>
                             <span
                                   [ngClass]="['releases-badge', release.status === 'EFETIVADO' ? 'status-effective' : 'status-pending']">{{release.status}}</span>
                         </td>
-                        <td>
+                        <td style="width:10%;">
                             <div class="flex">
                                 <button *ngIf="release.status === 'PENDENTE'" pButton pRipple pTooltip="Efetivar" icon="pi pi-check" class="p-button-rounded p-button-info mr-2" (click)="showDialog('EFFECTIVE', release)"></button>
                                 <button *ngIf="release.status === 'PENDENTE'" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editRelease(release)"></button>
