@@ -22,7 +22,7 @@ export class UserService {
     getBalance(userId: number): Observable<number> {
         return this.http
         .get<number>(
-            this.apiURL + '/api/usuarios/' + userId + '/saldo'
+            this.apiURL + '/api/user/' + userId + '/balance'
         )
         .pipe(retry(1), catchError(this.handleError));
     }
@@ -31,7 +31,7 @@ export class UserService {
         let params = new HttpParams().set('releaseType', releaseType);
         return this.http
         .get<number>(
-            this.apiURL + '/api/usuarios/' + userId + '/extract',
+            this.apiURL + '/api/user/' + userId + '/extract',
             { params: params }
         )
         .pipe(retry(1), catchError(this.handleError));

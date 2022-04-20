@@ -50,11 +50,9 @@
                         </th>
                         <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="mouth">Mês <p-sortIcon field="mouth"></p-sortIcon>
+                        <th pSortableColumn="releaseDate">Data <p-sortIcon field=""></p-sortIcon>
                         </th>
                         <th>Transação</th>
-                        <th pSortableColumn="year">Ano <p-sortIcon field="year"></p-sortIcon>
-                        </th>
                         <th pSortableColumn="value">Valor <p-sortIcon field="value"></p-sortIcon>
                         </th>
                         <th pSortableColumn="type">Tipo <p-sortIcon field="type"></p-sortIcon>
@@ -72,9 +70,9 @@
                         <td style="width:20%; min-width:8rem;"><span class="p-column-title">Descrição</span>
                             {{release.description}}
                         </td>
-                        <td style="width:10%; min-width:5rem;">
-                            <span class="p-column-title">Mês</span>
-                            {{release.mouth}}
+                        <td style="width:15%; min-width:5rem;">
+                            <span class="p-column-title">Data</span>
+                            {{release.releaseDate | date:'dd/MM/yy'}}
                         </td>
                         <td style="width:10%; min-width:5rem;"><span class="p-column-title">Transação</span>
                             <div class="flex align-items-center justify-content-center border-round"
@@ -84,11 +82,7 @@
                                    [ngClass]="['pi text-xl text-white', release.type === 'DESPESA' ? 'pi-shopping-cart' : 'pi-dollar']"></i>
                             </div>
                         </td>
-                        <td style="width:10%; min-width:8rem;">
-                            <span class="p-column-title">Ano</span>
-                            {{release.year}}
-                        </td>
-                        <td style="width:10%; min-width:5rem;">
+                        <td style="width:15%; min-width:5rem;">
                             <span class="p-column-title">Valor</span>
                             {{release.value | currency:'BRL'}}
                         </td>
@@ -114,7 +108,7 @@
         </div>
 
         <!-- Dialogs -->
-        <p-dialog [(visible)]="showEditDialog" [style]="{width: '450px'}" header="Detalhes" [modal]="true"
+        <p-dialog [(visible)]="showEditDialog" [style]="{width: '450px', minHeight:'680px'}" header="Detalhes" [modal]="true"
                   class="p-fluid">
             <ng-template pTemplate="content">
                 <div class=" mt-0 mx-auto mb-5 block shadow-2 flex align-items-center justify-content-center border-round"
@@ -124,15 +118,10 @@
                        [ngClass]="['pi text-xl text-white', release.type === 'DESPESA' ? 'pi-shopping-cart' : 'pi-dollar']"></i>
                 </div>
                 <div class="field">
-                    <label for="year">Ano</label>
-                    <p-inputNumber id="year" [(ngModel)]="release.year" [required]="true" autofocus></p-inputNumber>
-                    <small *ngIf="submitted && !release.year">Campo obrigatório</small>
-                </div>
-                <div class="field">
-                    <label for="mouth">Mês</label>
-                    <p-dropdown id="mouth" [options]="months" [(ngModel)]="release.mouth" placeholder="Selecione"
-                                [required]="true" [showClear]="true"></p-dropdown>
-                    <small *ngIf="submitted && !release.mouth">Campo obrigatório</small>
+                    <label for="releaseDate">Data do lançamento</label>
+                    <p-calendar id="releaseDate" [(ngModel)]="release.releaseDate" [required]="true" autofocus dateFormat="dd/mm/yy"
+                        [showIcon]="true" [showButtonBar]="true" placeholder="Ex: 01/01/2022"></p-calendar>
+                    <small *ngIf="submitted && !release.releaseDate">Campo obrigatório</small>
                 </div>
                 <div class="field">
                     <label for="description">Descrição</label>

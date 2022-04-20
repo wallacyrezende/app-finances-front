@@ -78,6 +78,7 @@ export class ReleasesPageComponent implements OnInit {
 
     editRelease(release: ReleasesDTO) {
         this.release = {...release};
+        console.log(this.release)
         this.showEditDialog = true;
     }
 

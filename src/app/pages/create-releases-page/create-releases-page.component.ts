@@ -33,10 +33,9 @@ export class CreateReleasesPageComponent implements OnInit {
     createForm() {
         this.releaseForm = this.formBuilder.group({
             description: [null, Validators.required],
-            year: [null, Validators.required],
             value: [null, Validators.required],
-            mouth: [null, Validators.required],
             type: [null, Validators.required],
+            releaseDate:[null, Validators.required],
             userId: [this.userId]
         });
     }

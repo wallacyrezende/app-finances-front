@@ -7,4 +7,5 @@ export interface ReleasesDTO {
 	userId: number;
 	type: string;
 	status: string;
+	releaseDate: Date;
 }

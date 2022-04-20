@@ -27,7 +27,7 @@ export class AuthService {
     authLogin(userData: UserDTO): Observable<User> {
         return this.http
             .post<User>(
-                this.apiURL + '/api/usuarios/autenticar',
+                this.apiURL + '/api/user/auth',
                 JSON.stringify(userData),
                 this.httpOptions
             )

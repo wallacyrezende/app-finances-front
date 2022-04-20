@@ -4,13 +4,8 @@
         <h2>Cadastrar Lançamentos</h2>
         <form (ngSubmit)="onSubmit()" (keydown.enter)="onSubmit()" [formGroup]="releaseForm">
             <div class="col-12 md:col-6 field">
-                <label for="year">Ano</label>
-                <p-inputNumber id="year" formControlName="year" placeholder="Ex: 2022" [min]="1920" autofocus></p-inputNumber>
-            </div>
-            <div class="col-12 md:col-6 field">
-                <label htmlFor="mouth">Mês</label>
-                <p-dropdown id="mouth" [options]="mouths" formControlName="mouth" placeholder="Selecione"
-                            [showClear]="true" value="mouths.value"></p-dropdown>
+                <label for="releaseDate">Data do lançamento</label>
+                <p-calendar id="releaseDate" [showIcon]="true" [showButtonBar]="true" placeholder="Ex: 01/01/2022" dateFormat="dd/mm/yy" formControlName="releaseDate"></p-calendar>
             </div>
             <div class="col-12 md:col-6 field">
                 <label htmlFor="description">Descrição</label>

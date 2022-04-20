@@ -5,8 +5,7 @@
           <tr>
               <th colspan="2"pSortableColumn="description" class="text-center">Descrição<p-sortIcon field="description"></p-sortIcon></th>
               <th pSortableColumn="value">Valor<p-sortIcon field="value"></p-sortIcon></th>
-              <th pSortableColumn="mouth">Mês<p-sortIcon field="mouth"></p-sortIcon></th>
-              <th pSortableColumn="year">Ano<p-sortIcon field="year"></p-sortIcon></th>
+              <th pSortableColumn="releaseDate">Data<p-sortIcon field="releaseDate"></p-sortIcon></th>
               <th pSortableColumn="type">Tipo<p-sortIcon field="type"></p-sortIcon></th>
               <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
               <th>Ver</th>
@@ -22,8 +21,7 @@
               </td>
               <td style="width: 15%; min-width: 7rem;">{{dataTable.description}}</td>
               <td style="width: 15%; min-width: 8rem;">{{dataTable.value | currency:'BRL'}}</td>
-              <td style="width: 15%; min-width: 8rem;">{{dataTable.mouth}}</td>
-              <td style="width: 15%; min-width: 8rem;">{{dataTable.year}}</td>
+              <td style="width: 15%; min-width: 8rem;">{{dataTable.releaseDate | date: 'dd/MM/yy'}}</td>
               <td style="width: 15%; min-width: 8rem;">{{dataTable.type}}</td>
               <td style="width: 15%; min-width: 8rem;">{{dataTable.status}}</td>
               <td style="width: 10%;">
