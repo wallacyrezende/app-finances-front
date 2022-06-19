@@ -2,13 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../../service/app.config.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../service/user/user.service';
+import { TokenStorageService } from 'src/app/shared/auth/token-storage.service';
 import {
     SocialAuthService,
     FacebookLoginProvider,
     SocialUser,
 } from 'angularx-social-login';
-import { User, UserDTO } from 'src/app/service/user/User';
+import { UserDTO } from 'src/app/service/user/User';
 import { StorageService } from 'src/app/shared/local-storage/storage.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/auth/auth.service';
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
     
     @Input()
-    formDTO = {
+    form = {
         email: '',
         password: '',
         rememberMe: false
@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private storageService: StorageService,
         private serviceMsg: MessageService,
-        public authService: AuthService
+        public authService: AuthService,
+        private tokenStorage: TokenStorageService
     ) { }
 
     ngOnInit(): void {
@@ -66,25 +67,20 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    loginWithFacebook(): void {
-        this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
-    }
+    // loginWithFacebook(): void {
+    //     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    // }
 
     login() {
         this.isLoading = true;
-        this.userDTO = {
-            email: this.formDTO.email,
-            password: this.formDTO.password
-        }
-
-        this.authService.authLogin(this.userDTO).subscribe({
+        this.authService.login(this.form.email, this.form.password).subscribe({
             next: (data) => {
                 this.isLoggedin = data != null;
-                this.addStorages(data as User);
-                this.router.navigate(['/home']);
+                this.addStorages(data);
+                this.router.navigate(['home']);
             }, 
             error: (e) => {
-                this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
+                this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e.error_description });
                 this.isLoading = false;
             },
             complete: () => {
@@ -93,12 +89,13 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    signOut(): void {
-        this.socialAuthService.signOut();
-    }
+    // signOut(): void {
+    //     this.socialAuthService.signOut();
+    // }
 
-    addStorages(data: any) {
+    private addStorages(data: any) {
         this.storageService.setItem('isLoggedin', this.isLoggedin);
-        this.storageService.setItem('user', data);
+        this.storageService.setItem('user', 1);
+        this.tokenStorage.saveToken(data.access_token);
     }
 }

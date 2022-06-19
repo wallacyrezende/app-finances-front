@@ -42,6 +42,7 @@ import { GraphicOverviewComponent } from './components/graphic-overview/graphic-
 import { ReleasesPageComponent } from './pages/releases-page/releases-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { CreateReleasesPageComponent } from './pages/create-releases-page/create-releases-page.component';
+import { authInterceptorProviders } from './shared/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -63,14 +64,14 @@ import { CreateReleasesPageComponent } from './pages/create-releases-page/create
     AppRoutingModule,
     SakaiMaterialModule,
     SocialLoginModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   // schemas: [
   //   CUSTOM_ELEMENTS_SCHEMA
   // ],
   providers: [
     ConfigService, FormBuilder, UserService, StorageService, ReleasesService,
-    AuthService, AuthGuard, SecureInnerPagesGuard,
+    AuthService, AuthGuard, SecureInnerPagesGuard, authInterceptorProviders,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

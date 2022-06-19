@@ -1,34 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
-import { UserDTO, User } from '../../service/user/User';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { TokenStorageService } from './token-storage.service';
 
+const AUTH_API = 'http://localhost:8765/fn-oauth/oauth/';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     apiURL = environment.apiUrl;
+    
 
     constructor(
         private http: HttpClient,
-        private router: Router
+        private router: Router,
+        private tokenStorage: TokenStorageService
     ) { }
 
     httpOptions = {
         headers: new HttpHeaders({
-            'Content-Type': 'application/json',
+            'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Authorization': 'Basic ' + btoa(environment.clientId + ":" + environment.clientSecret)
         }),
     };
 
-    authLogin(userData: UserDTO): Observable<User> {
+    login(email: string, password: string): Observable<Token> {
+        let params = this.factoryParams(email, password);
         return this.http
-            .post<User>(
-                this.apiURL + '/api/user/auth',
-                JSON.stringify(userData),
+            .post<Token>(
+                AUTH_API + 'token',
+                params,
                 this.httpOptions
             )
             .pipe(catchError(this.handleError));
@@ -41,11 +46,21 @@ export class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('isLoggedin');
+        localStorage.clear();
+        this.tokenStorage.signOut()                                                           
         this.router.navigate(['login']);
     }
 
-    handleError(error: any) {
+    private factoryParams(username: string, password: string): URLSearchParams {
+        let params = new URLSearchParams();
+        params.append('username',username);
+        params.append('password',password);    
+        params.append('grant_type','password');
+        // params.append('client_id','applicationAngular');
+        return params;
+    }
+
+    private handleError(error: any) {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {
             // Get client-side error
@@ -59,4 +74,10 @@ export class AuthService {
             return errorMessage;
         });
     }
+}
+
+interface Token {
+    access_token: string;
+    expires_in: number;
+    scope: string;
 }

@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080',
-  facebookId: '392274785662753'
+  facebookId: '392274785662753',
+  clientId: 'myappname123',
+  clientSecret: 'myappsecret123'
+
 };
 
 /*

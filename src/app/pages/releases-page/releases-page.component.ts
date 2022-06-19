@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LazyLoadEvent, SelectItem } from 'primeng/api';
 import { ReleaseStatus, releasesType } from 'src/app/shared/enum/releaseType';
 import { Months } from '../../shared/enum/months';
@@ -6,13 +6,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ReleasesService } from 'src/app/service/releases/releases.service';
 import { StorageService } from 'src/app/shared/local-storage/storage.service';
 import { ReleasesDTO } from 'src/app/service/releases/releases';
+import { Subscription } from 'rxjs';
 
 @Component({
     templateUrl: './releases-page.component.html',
     providers: [MessageService, ConfirmationService],
     styleUrls: ['../../../assets/demo/badges.scss', './releases-page.component.scss']
 })
-export class ReleasesPageComponent implements OnInit {
+export class ReleasesPageComponent implements OnInit, OnDestroy {
 
     months: SelectItem[] = Months;
     releaseType: SelectItem[] = releasesType;
@@ -36,6 +37,8 @@ export class ReleasesPageComponent implements OnInit {
     action!: string;
     pageNumberActual!: number;
 
+    subscriptions: Subscription[] = [];
+
     constructor( 
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
@@ -57,7 +60,12 @@ export class ReleasesPageComponent implements OnInit {
         ];
     }
 
+    ngOnDestroy() {
+        this.subscriptions.forEach( subscription => subscription.unsubscribe() );
+    }
+
     loadReleases(event: LazyLoadEvent) {
+        console.log((event.globalFilter));
         this.first = event.first!;
         this.rows = event.rows!;
         this.pageNumberActual = this.first/event.rows!;
@@ -65,7 +73,7 @@ export class ReleasesPageComponent implements OnInit {
     }
 
     getReleases() {
-        this.releasesService.getReleases(this.userId, this.pageNumberActual, this.rows).subscribe({
+        let subscription = this.releasesService.getReleases(this.userId, this.pageNumberActual, this.rows).subscribe({
             next: (data) => {
                 this.releases = data.items;
                 this.totalRecords = data.totalRecords;
@@ -74,6 +82,7 @@ export class ReleasesPageComponent implements OnInit {
                 this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
             }
         });
+        this.subscriptions.push(subscription);
     }
 
     editRelease(release: ReleasesDTO) {
@@ -96,7 +105,7 @@ export class ReleasesPageComponent implements OnInit {
     saveRelease(release: ReleasesDTO) {
         this.submitted = true;
         if(release.description && release.mouth && release.year && release.value && release.type) {
-            this.releasesService.update(release).subscribe({
+            let subscription = this.releasesService.update(release).subscribe({
                 next: (data) => { 
                     this.showEditDialog = !data;
                     this.submitted = false;
@@ -107,6 +116,7 @@ export class ReleasesPageComponent implements OnInit {
                     this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
                 }
             });
+            this.subscriptions.push(subscription);
         }
     }
 
@@ -118,7 +128,7 @@ export class ReleasesPageComponent implements OnInit {
     }
 
     confirmEffectiveRelease() {
-        this.releasesService.updateStatus(this.release.id, ReleaseStatus.effective).subscribe({
+        let subscription = this.releasesService.updateStatus(this.release.id, ReleaseStatus.effective).subscribe({
             next: (data) => {
                 this.showAlert = !data;
                 this.getReleases(); 
@@ -127,11 +137,12 @@ export class ReleasesPageComponent implements OnInit {
             error: (e) => {
                 this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
             }
-        })
+        });
+        this.subscriptions.push(subscription);
     }
 
     confirmCancelRelease() { 
-        this.releasesService.updateStatus(this.release.id, ReleaseStatus.canceled).subscribe({
+        let subscription = this.releasesService.updateStatus(this.release.id, ReleaseStatus.canceled).subscribe({
             next: (data) => {
                 this.showAlert = !data;
                 this.getReleases(); 
@@ -141,5 +152,6 @@ export class ReleasesPageComponent implements OnInit {
                 this.serviceMsg.add({ key: 'tst', severity: 'error', summary: 'Mensagem', detail: e });
             }
         })
+        this.subscriptions.push(subscription);
     }
 }

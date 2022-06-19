@@ -29,7 +29,7 @@
             <!-- Table -->
             <p-table #dt
                      [lazy]="true" (onLazyLoad)="loadReleases($event)" [totalRecords]="totalRecords" [value]="releases"
-                     [columns]="cols" [globalFilterFields]="['description']" [rows]="rows" [paginator]="true"
+                     [columns]="cols" [rows]="rows" [paginator]="true"
                      [rowsPerPageOptions]="[5,10,30,50]" [showCurrentPageReport]="true" [(selection)]="selectedReleases"
                      [rowHover]="true" selectionMode="multiple" responsiveLayout="scroll" dataKey="id"
                      currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} registros">
@@ -38,7 +38,7 @@
                         <h5 class="m-0">Editar lançamentos</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')"
+                            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')"
                                    placeholder="Procurar..." />
                         </span>
                     </div>
@@ -48,17 +48,12 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="releaseDate">Data <p-sortIcon field=""></p-sortIcon>
-                        </th>
+                        <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="releaseDate">Data <p-sortIcon field="releaseDate"></p-sortIcon></th>
                         <th>Transação</th>
-                        <th pSortableColumn="value">Valor <p-sortIcon field="value"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="type">Tipo <p-sortIcon field="type"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
-                        </th>
+                        <th pSortableColumn="value">Valor <p-sortIcon field="value"></p-sortIcon></th>
+                        <th pSortableColumn="type">Tipo <p-sortIcon field="type"></p-sortIcon></th>
+                        <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -67,12 +62,12 @@
                         <td>
                             <p-tableCheckbox [value]="release"></p-tableCheckbox>
                         </td>
-                        <td style="width:20%; min-width:8rem;"><span class="p-column-title">Descrição</span>
+                        <td style="width:20%; min-width:8rem;" field="description"><span class="p-column-title">Descrição</span>
                             {{release.description}}
                         </td>
                         <td style="width:15%; min-width:5rem;">
                             <span class="p-column-title">Data</span>
-                            {{release.releaseDate | date:'dd/MM/yy'}}
+                            {{release.releaseDate}}
                         </td>
                         <td style="width:10%; min-width:5rem;"><span class="p-column-title">Transação</span>
                             <div class="flex align-items-center justify-content-center border-round"
