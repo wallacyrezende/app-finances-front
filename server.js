@@ -11,5 +11,5 @@ app.get('/*', (req, res) =>
     res.sendFile('index.html', {root: 'dist/my-finances-app/'}),
 );
 
-// Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+// Start the app by listening
+app.listen(process.env.PORT || 80);
